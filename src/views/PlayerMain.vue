@@ -3,7 +3,10 @@
     <h2>人物</h2><hr>
     <div class="attribute">
       <div class="attribute-name"><span>昵称</span></div>
-      <div class="attribute-value"><span>{{attribute.name}}</span>&nbsp;&nbsp;&nbsp;<el-button type="primary" icon="el-icon-edit" circle></el-button></div>
+      <div class="attribute-value">
+        <div v-if="!fixNameFlag"><span>{{attribute.name}}</span>&nbsp;&nbsp;&nbsp;<el-button type="primary" icon="el-icon-edit" @click="fixNameFlag = !fixNameFlag" circle></el-button></div>
+        <div v-else><el-input v-model="inputName" :placeholder="attribute.name" style="width: 30%"></el-input>&nbsp;&nbsp;&nbsp;<el-button type="success" icon="el-icon-check" @click="saveName" circle></el-button><el-button type="danger" icon="el-icon-close" @click="fixNameFlag = !fixNameFlag" circle></el-button></div>
+      </div>
     </div>
     <div class="attribute">
       <div class="attribute-name"><span>等级</span></div>
@@ -11,19 +14,27 @@
     </div>
     <div class="attribute">
       <div class="attribute-name"><span>经验值</span></div>
-      <div class="attribute-value"><span>{{attribute.exp}}/200</span></div>
+      <div class="attribute-value"><span>{{attribute.exp}}/{{expList[attribute.lv]}}</span>&nbsp;&nbsp;&nbsp;<el-button v-if="attribute.exp >= expList[attribute.lv]" round @click="lvlUp">升级</el-button></div>
+    </div>
+    <div class="attribute">
+      <div class="attribute-name"><span>HP</span></div>
+      <div class="attribute-value"><span>{{attribute.hp}}</span><span v-if="equipmentHP" style="color: limegreen">&nbsp;&nbsp;&nbsp;( + {{equipmentHP}})</span>&nbsp;&nbsp;&nbsp;<el-button type="primary" icon="el-icon-plus" v-if="attribute.potential > 0" @click="abilityUp('hp')" circle ></el-button></div>
+    </div>
+    <div class="attribute">
+      <div class="attribute-name"><span>MP</span></div>
+      <div class="attribute-value"><span>{{attribute.mp}}</span><span v-if="equipmentMP" style="color: limegreen">&nbsp;&nbsp;&nbsp;( + {{equipmentMP}})</span>&nbsp;&nbsp;&nbsp;<el-button type="primary" icon="el-icon-plus" v-if="attribute.potential > 0" @click="abilityUp('mp')" circle></el-button></div>
     </div>
     <div class="attribute">
       <div class="attribute-name"><span>攻击</span></div>
-      <div class="attribute-value"><span>{{attribute.atk}}</span></div>
+      <div class="attribute-value"><span>{{attribute.atk}}</span><span v-if="equipmentAtk" style="color: limegreen">&nbsp;&nbsp;&nbsp;( + {{equipmentAtk}})</span>&nbsp;&nbsp;&nbsp;<el-button type="primary" icon="el-icon-plus" v-if="attribute.potential > 0" @click="abilityUp('atk')" circle></el-button></div>
     </div>
     <div class="attribute">
       <div class="attribute-name"><span>防御</span></div>
-      <div class="attribute-value"><span>{{attribute.def}}</span></div>
+      <div class="attribute-value"><span>{{attribute.def}}</span><span v-if="equipmentDef" style="color: limegreen">&nbsp;&nbsp;&nbsp;( + {{equipmentDef}})</span>&nbsp;&nbsp;&nbsp;<el-button type="primary" icon="el-icon-plus" v-if="attribute.potential > 0" @click="abilityUp('def')" circle></el-button></div>
     </div>
     <div class="attribute">
       <div class="attribute-name"><span>速度</span></div>
-      <div class="attribute-value"><span>{{attribute.spd}}</span></div>
+      <div class="attribute-value"><span>{{attribute.spd}}</span><span v-if="equipmentSpd" style="color: limegreen">&nbsp;&nbsp;&nbsp;( + {{equipmentSpd}})</span>&nbsp;&nbsp;&nbsp;<el-button type="primary" icon="el-icon-plus" v-if="attribute.potential > 0" @click="abilityUp('spd')" circle></el-button></div>
     </div>
     <div class="attribute">
       <div class="attribute-name"><span>潜力</span></div>
@@ -38,10 +49,39 @@ export default {
   name: 'PlayerMain',
   data () {
     return {
+      fixNameFlag: false,
+      inputName: '',
+      equipmentAtk: 10,
+      equipmentDef: 15,
+      equipmentSpd: 13,
+      equipmentHP: 0,
+      equipmentMP: 0 // 绿字装备属性
     }
   },
   computed: {
-    ...mapState(['attribute'])
+    ...mapState(['attribute']),
+    ...mapState(['expList'])
+  },
+  methods: {
+    lvlUp () {
+      this.$store.dispatch('lvlUp')
+    },
+    abilityUp (ability) {
+      this.$store.dispatch('abilityUp', ability)
+    },
+    saveName () {
+      const reg = /^([a-zA-Z0-9_\u4e00-\u9fa5]){3,13}$/
+      if (reg.test(this.inputName)) {
+        this.$store.dispatch('saveName', this.inputName)
+        this.fixNameFlag = false
+      } else {
+        this.$message({
+          showClose: true,
+          message: '名称不符合规范,需要3-13位的字母数字或中文',
+          type: 'warning'
+        })
+      }
+    }
   }
 }
 </script>

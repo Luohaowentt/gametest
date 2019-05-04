@@ -5,6 +5,11 @@
 <script>
 export default {
   name: 'Knapsack'
+  // data () {
+  //   return {
+  //     test: 'test'
+  //   }
+  // }
 }
 </script>
 
