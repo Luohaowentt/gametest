@@ -26,41 +26,55 @@
     </div>
     <div class="attribute">
       <div class="attribute-name"><span>攻击</span></div>
-      <div class="attribute-value"><span>{{attribute.atk}}</span><span v-if="equipmentAtk" style="color: limegreen">&nbsp;&nbsp;&nbsp;( + {{equipmentAtk}})</span>&nbsp;&nbsp;&nbsp;<el-button type="primary" icon="el-icon-plus" v-if="attribute.potential > 0" @click="abilityUp('atk')" circle></el-button></div>
+      <div class="attribute-value">
+        <span>{{attribute.atk}}</span>
+        <span v-if="equipmentAttrSum.atk > 0" style="color: limegreen">&nbsp;&nbsp;&nbsp;( + {{equipmentAttrSum.atk}})</span>
+        <span v-if="equipmentAttrSum.atk < 0" style="color: indianred">&nbsp;&nbsp;&nbsp;( - {{Math.abs(equipmentAttrSum.atk)}})</span>&nbsp;&nbsp;&nbsp;
+        <el-button type="primary" icon="el-icon-plus" v-if="attribute.potential > 0" @click="abilityUp('atk')" circle></el-button>
+      </div>
     </div>
     <div class="attribute">
       <div class="attribute-name"><span>防御</span></div>
-      <div class="attribute-value"><span>{{attribute.def}}</span><span v-if="equipmentDef" style="color: limegreen">&nbsp;&nbsp;&nbsp;( + {{equipmentDef}})</span>&nbsp;&nbsp;&nbsp;<el-button type="primary" icon="el-icon-plus" v-if="attribute.potential > 0" @click="abilityUp('def')" circle></el-button></div>
+      <div class="attribute-value"><span>{{attribute.def}}</span>
+        <span v-if="equipmentAttrSum.def > 0" style="color: limegreen">&nbsp;&nbsp;&nbsp;( + {{equipmentAttrSum.def}})</span>
+        <span v-if="equipmentAttrSum.def < 0" style="color: indianred">&nbsp;&nbsp;&nbsp;( - {{Math.abs(equipmentAttrSum.def)}})</span>&nbsp;&nbsp;&nbsp;
+        <el-button type="primary" icon="el-icon-plus" v-if="attribute.potential > 0" @click="abilityUp('def')" circle></el-button>
+      </div>
     </div>
     <div class="attribute">
       <div class="attribute-name"><span>速度</span></div>
-      <div class="attribute-value"><span>{{attribute.spd}}</span><span v-if="equipmentSpd" style="color: limegreen">&nbsp;&nbsp;&nbsp;( + {{equipmentSpd}})</span>&nbsp;&nbsp;&nbsp;<el-button type="primary" icon="el-icon-plus" v-if="attribute.potential > 0" @click="abilityUp('spd')" circle></el-button></div>
+      <div class="attribute-value"><span>{{attribute.spd}}</span>
+        <span v-if="equipmentAttrSum.spd > 0" style="color: limegreen">&nbsp;&nbsp;&nbsp;( + {{equipmentAttrSum.spd}})</span>
+        <span v-if="equipmentAttrSum.spd < 0" style="color: indianred">&nbsp;&nbsp;&nbsp;( - {{Math.abs(equipmentAttrSum.spd)}})</span>&nbsp;&nbsp;&nbsp;
+        <el-button type="primary" icon="el-icon-plus" v-if="attribute.potential > 0" @click="abilityUp('spd')" circle></el-button>
+      </div>
     </div>
     <div class="attribute">
-      <div class="attribute-name"><span>潜力</span></div>
-      <div class="attribute-value"><span>{{attribute.potential}}</span></div>
+      <div class="attribute-name">
+        <span>潜力</span>
+      </div>
+      <div class="attribute-value">
+        <span>{{attribute.potential}}</span>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import {mapState, mapGetters} from 'vuex'
 export default {
   name: 'PlayerMain',
   data () {
     return {
       fixNameFlag: false,
       inputName: '',
-      equipmentAtk: 10,
-      equipmentDef: 15,
-      equipmentSpd: 13,
       equipmentHP: 0,
       equipmentMP: 0 // 绿字装备属性
     }
   },
   computed: {
-    ...mapState(['attribute']),
-    ...mapState(['expList'])
+    ...mapState(['attribute', 'expList', 'equipment']),
+    ...mapGetters(['equipmentAttrSum'])
   },
   methods: {
     lvlUp () {

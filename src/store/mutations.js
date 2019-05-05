@@ -1,4 +1,4 @@
-import {LVLUP, ABILITYUP, SAVENAME} from '@/store/mutation-types'
+import {LVLUP, ABILITYUP, SAVENAME, DISCARD} from '@/store/mutation-types'
 
 export default {
   [LVLUP] (state) {
@@ -20,5 +20,13 @@ export default {
   },
   [SAVENAME] (state, name) {
     state.attribute.name = name
+  },
+  [DISCARD] (state, id) {
+    for (let i = 0; i < state.knapsackList.length; i++) {
+      if (state.knapsackList[i] === id) {
+        state.knapsackList.splice(i, 1)
+        return
+      }
+    }
   }
 }
