@@ -29,7 +29,7 @@
         prop="operation"
         label="操作">
         <template slot-scope="scope">
-          <el-button plain>装备</el-button>&nbsp;&nbsp;&nbsp;<el-button type="danger"  @click="discard(scope.row)" plain>丢弃</el-button>
+          <el-button @click="equip(scope.row)" plain>装备</el-button>&nbsp;&nbsp;&nbsp;<el-button type="danger"  @click="discard(scope.row)" plain>丢弃</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -45,13 +45,40 @@ export default {
     }
   },
   computed: {
-    ...mapState(['knapsackList']),
+    ...mapState(['knapsackList', 'equipment']),
     ...mapGetters(['knapsackData'])
   },
   methods: {
     discard (row) {
       if (window.confirm(`真的要丢掉这件 ${row.name} 吗`)) {
         this.$store.dispatch('discard', row.id)
+      }
+    },
+    equip (row) {
+      if (row.type === '武器') {
+        if (this.equipment.arms) {
+          if (window.confirm(`已经装备了 ${this.equipment.arms.name} ,是否更换？`)) {
+            this.$store.dispatch('equip', [row, true, 'arms']) // 数组第二个表示是否需要更换
+          }
+        } else {
+          this.$store.dispatch('equip', [row, false, 'arms'])
+        }
+      } else if (row.type === '防具') {
+        if (this.equipment.armor) {
+          if (window.confirm(`已经装备了 ${this.equipment.armor.name} ,是否更换？`)) {
+            this.$store.dispatch('equip', [row, true, 'armor']) // 数组第二个表示是否需要更换
+          }
+        } else {
+          this.$store.dispatch('equip', [row, false, 'armor'])
+        }
+      } else if (row.type === '鞋子') {
+        if (this.equipment.shoes) {
+          if (window.confirm(`已经装备了 ${this.equipment.shoes.name} ,是否更换？`)) {
+            this.$store.dispatch('equip', [row, true, 'shoes']) // 数组第二个表示是否需要更换
+          }
+        } else {
+          this.$store.dispatch('equip', [row, false, 'shoes'])
+        }
       }
     }
   }

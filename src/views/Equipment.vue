@@ -7,7 +7,7 @@
           <img class="hero-img-list" :src="equipment.arms.src"  :alt="equipment.arms.name">
           <div class="equipment-position"><span>{{equipment.arms.name}}</span></div>
           <div class="equipment-position"><span>{{equipment.arms.atr}}</span></div>&nbsp;&nbsp;&nbsp;
-          <div class="equip-btn">&nbsp;&nbsp;&nbsp;<el-button plain>更换</el-button>&nbsp;&nbsp;&nbsp;<el-button type="danger" plain>卸下</el-button></div>
+          <div class="equip-btn">&nbsp;&nbsp;&nbsp;<el-button plain>更换</el-button>&nbsp;&nbsp;&nbsp;<el-button type="danger"  @click="takeOff(equipment.arms)" plain>卸下</el-button></div>
         </div>
         <div v-else>
           <div class="equipment-position"><span>没有佩戴</span></div>
@@ -20,7 +20,7 @@
           <img class="hero-img-list" :src="equipment.armor.src"  :alt="equipment.armor.name">
           <div class="equipment-position"><span>{{equipment.armor.name}}</span></div>
           <div class="equipment-position"><span>{{equipment.armor.atr}}</span></div>&nbsp;&nbsp;&nbsp;
-          <div class="equip-btn">&nbsp;&nbsp;&nbsp;<el-button plain>更换</el-button>&nbsp;&nbsp;&nbsp;<el-button type="danger" plain>卸下</el-button></div>
+          <div class="equip-btn">&nbsp;&nbsp;&nbsp;<el-button plain>更换</el-button>&nbsp;&nbsp;&nbsp;<el-button type="danger"  @click="takeOff(equipment.armor)" plain>卸下</el-button></div>
         </div>
         <div v-else>
           <div class="equipment-position"><span>没有佩戴</span></div>
@@ -33,7 +33,7 @@
           <img class="hero-img-list" :src="equipment.shoes.src"  :alt="equipment.shoes.name">
           <div class="equipment-position"><span>{{equipment.shoes.name}}</span></div>
           <div class="equipment-position"><span>{{equipment.shoes.atr}}</span></div>&nbsp;&nbsp;&nbsp;
-          <div class="equip-btn">&nbsp;&nbsp;&nbsp;<el-button plain>更换</el-button>&nbsp;&nbsp;&nbsp;<el-button type="danger" plain>卸下</el-button></div>
+          <div class="equip-btn">&nbsp;&nbsp;&nbsp;<el-button plain>更换</el-button>&nbsp;&nbsp;&nbsp;<el-button type="danger" @click="takeOff(equipment.shoes)" plain>卸下</el-button></div>
         </div>
         <div v-else>
           <div class="equipment-position"><span>没有佩戴</span></div>
@@ -50,6 +50,11 @@ export default {
   name: 'Equipment',
   computed: {
     ...mapState(['equipment'])
+  },
+  methods: {
+    takeOff (equipment) {
+      this.$store.dispatch('takeOff', equipment)
+    }
   }
 }
 </script>

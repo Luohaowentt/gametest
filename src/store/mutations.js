@@ -1,4 +1,4 @@
-import {LVLUP, ABILITYUP, SAVENAME, DISCARD} from '@/store/mutation-types'
+import {LVLUP, ABILITYUP, SAVENAME, DISCARD, TAKEOFF, EQUIP} from '@/store/mutation-types'
 
 export default {
   [LVLUP] (state) {
@@ -24,6 +24,28 @@ export default {
   [DISCARD] (state, id) {
     for (let i = 0; i < state.knapsackList.length; i++) {
       if (state.knapsackList[i] === id) {
+        state.knapsackList.splice(i, 1)
+        return
+      }
+    }
+  },
+  [TAKEOFF] (state, equipment) {
+    state.knapsackList.push(equipment.id)
+    if (equipment.type === '武器') {
+      state.equipment.arms = ''
+    } else if (equipment.type === '防具') {
+      state.equipment.armor = ''
+    } else if (equipment.type === '鞋子') {
+      state.equipment.shoes = ''
+    }
+  },
+  [EQUIP] (state, equipment) { // equipment是一个数组，他的第一个值为装备对象，第二个值为布尔值，代表是否需要更换，第三个值为装备类型
+    if (equipment[1]) {
+      this.commit(TAKEOFF, state.equipment[equipment[2]])
+    }
+    state.equipment[equipment[2]] = equipment[0]
+    for (let i = 0; i < state.knapsackList.length; i++) {
+      if (state.knapsackList[i] === equipment[0].id) {
         state.knapsackList.splice(i, 1)
         return
       }
