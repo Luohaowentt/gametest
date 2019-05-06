@@ -1,4 +1,4 @@
-import {LVLUP, ABILITYUP, SAVENAME, DISCARD, EQUIP, TAKEOFF} from '@/store/mutation-types'
+import {LVLUP, ABILITYUP, SAVENAME, DISCARD, EQUIP, TAKEOFF, ADDEQUIPMENT} from '@/store/mutation-types'
 
 export default {
   lvlUp ({commit}) {
@@ -18,5 +18,8 @@ export default {
   },
   equip ({commit}, equipment) {
     commit(EQUIP, equipment)
+  },
+  addEquipment ({commit}, id) {
+    commit(ADDEQUIPMENT, id)
   }
 }

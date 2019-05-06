@@ -1,4 +1,4 @@
-import {LVLUP, ABILITYUP, SAVENAME, DISCARD, TAKEOFF, EQUIP} from '@/store/mutation-types'
+import {LVLUP, ABILITYUP, SAVENAME, DISCARD, TAKEOFF, EQUIP, ADDEQUIPMENT} from '@/store/mutation-types'
 
 export default {
   [LVLUP] (state) {
@@ -50,5 +50,8 @@ export default {
         return
       }
     }
+  },
+  [ADDEQUIPMENT] (state, id) {
+    state.knapsackList.push(id)
   }
 }

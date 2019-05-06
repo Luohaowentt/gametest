@@ -6,6 +6,7 @@ import Skills from '@/views/Skills'
 import Equipment from '@/views/Equipment'
 import Knapsack from '@/views/Knapsack'
 import PlayerMain from '@/views/PlayerMain'
+import FindEquipment from '@/views/FindEquipment'
 
 Vue.use(ElementUI)
 Vue.use(Router)
@@ -35,6 +36,11 @@ export default new Router({
       path: '/attribute',
       name: 'PlayerMain',
       component: PlayerMain
+    },
+    {
+      path: '/findEquipment/:type',
+      name: 'FindEquipment',
+      component: FindEquipment
     }
   ]
 })

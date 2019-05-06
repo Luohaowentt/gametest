@@ -1,7 +1,7 @@
 <template>
   <div><h2>背包</h2><hr>
     <el-table
-      :data="knapsackData"
+      :data="knapsackData.slice((currentPage - 1) * 5, currentPage * 5)"
       style="width: 100%">
       <el-table-column
         prop="icon"
@@ -33,6 +33,11 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination
+      layout="prev, pager, next"
+      @current-change="currentChange"
+      :total="50">
+    </el-pagination>
   </div>
 </template>
 
@@ -42,7 +47,11 @@ export default {
   name: 'Knapsack',
   data () {
     return {
+      currentPage: 1
     }
+  },
+  watch: {
+
   },
   computed: {
     ...mapState(['knapsackList', 'equipment']),
@@ -80,6 +89,9 @@ export default {
           this.$store.dispatch('equip', [row, false, 'shoes'])
         }
       }
+    },
+    currentChange (currentPage) {
+      this.currentPage = currentPage
     }
   }
 }
