@@ -42,5 +42,27 @@ export default {
     {id: 304, name: '奥数鞋', type: '鞋子', atr: '速度 + 10 防御 + 3', atk: 0, def: 3, spd: 10, src: 'http://cdn.dota2.com/apps/dota2/images/items/arcane_boots_lg.png'},
     {id: 305, name: '远行鞋', type: '鞋子', atr: '速度 + 20', atk: 0, def: 0, spd: 20, src: 'http://cdn.dota2.com/apps/dota2/images/items/travel_boots_lg.png'},
     {id: 306, name: '速度靴', type: '鞋子', atr: '速度 + 20', atk: 0, def: 0, spd: 20, src: 'http://cdn.dota2.com/apps/dota2/images/items/boots_lg.png'}
-  ]
+  ],
+  // 技能信息
+  skillData: [{
+    id: 1,
+    imgSrc: 'http://cdn.dota2.com/apps/dota2/images/abilities/bounty_hunter_shuriken_toss_lg.png',
+    name: '投掷飞镖',
+    rate: 2
+  }, {
+    id: 2,
+    imgSrc: 'http://cdn.dota2.com/apps/dota2/images/abilities/bounty_hunter_jinada_lg.png',
+    name: '忍术',
+    rate: 4
+  }, {
+    id: 3,
+    imgSrc: 'http://cdn.dota2.com/apps/dota2/images/abilities/bounty_hunter_wind_walk_lg.png',
+    name: '暗影步',
+    rate: 2
+  }, {
+    id: 4,
+    imgSrc: 'http://cdn.dota2.com/apps/dota2/images/abilities/bounty_hunter_track_lg.png',
+    name: '追踪术',
+    rate: 1
+  }]
 }

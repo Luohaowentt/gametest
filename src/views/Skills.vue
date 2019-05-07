@@ -3,7 +3,7 @@
   <h2>技能</h2><hr>
   <div class="skills-main">
     <el-table
-      :data="tableData"
+      :data="skillData"
       style="width: 650px; margin:0 auto">
       <el-table-column
         label="图标"
@@ -25,7 +25,9 @@
       <el-table-column
         label="操作"
         width="250">
-        <el-button plain>技能信息</el-button><el-button plain>升级</el-button>
+        <template slot-scope="scope">
+          <el-button plain>技能信息</el-button><el-button @click="skillUp(scope.row)" plain>升级</el-button>
+        </template>
       </el-table-column>
     </el-table>
   </div>
@@ -33,27 +35,19 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 export default {
   name: 'Skills',
   data () {
     return {
-      tableData: [{
-        imgSrc: 'http://cdn.dota2.com/apps/dota2/images/abilities/bounty_hunter_shuriken_toss_lg.png',
-        name: '投掷飞镖',
-        rate: '2'
-      }, {
-        imgSrc: 'http://cdn.dota2.com/apps/dota2/images/abilities/bounty_hunter_jinada_lg.png',
-        name: '忍术',
-        rate: '4'
-      }, {
-        imgSrc: 'http://cdn.dota2.com/apps/dota2/images/abilities/bounty_hunter_wind_walk_lg.png',
-        name: '暗影步',
-        rate: '2'
-      }, {
-        imgSrc: 'http://cdn.dota2.com/apps/dota2/images/abilities/bounty_hunter_track_lg.png',
-        name: '追踪术',
-        rate: '1'
-      }]
+    }
+  },
+  computed: {
+    ...mapState(['skillData'])
+  },
+  methods: {
+    skillUp (skill) {
+      skill.rate++
     }
   }
 }
